@@ -1,28 +1,47 @@
-class AllServiceListResponseModel {
-  String statusCode;
-  String statusMessage;
-  List<AllService> result;
+class AllServiceResponse {
+  Status status;
+  List<AllService> data;
 
-  AllServiceListResponseModel({this.statusCode, this.statusMessage, this.result});
+  AllServiceResponse({this.status, this.data});
 
-  AllServiceListResponseModel.fromJson(Map<String, dynamic> json) {
-    statusCode = json['statusCode'];
-    statusMessage = json['statusMessage'];
-    if (json['result'] != null) {
-      result = new List<AllService>();
-      json['result'].forEach((v) {
-        result.add(new AllService.fromJson(v));
+  AllServiceResponse.fromJson(Map<String, dynamic> json) {
+    status =
+    json['status'] != null ? new Status.fromJson(json['status']) : null;
+    if (json['data'] != null) {
+      data = new List<AllService>();
+      json['data'].forEach((v) {
+        data.add(new AllService.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['statusCode'] = this.statusCode;
-    data['statusMessage'] = this.statusMessage;
-    if (this.result != null) {
-      data['result'] = this.result.map((v) => v.toJson()).toList();
+    if (this.status != null) {
+      data['status'] = this.status.toJson();
     }
+    if (this.data != null) {
+      data['data'] = this.data.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Status {
+  String code;
+  String message;
+
+  Status({this.code, this.message});
+
+  Status.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    message = json['message'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['code'] = this.code;
+    data['message'] = this.message;
     return data;
   }
 }

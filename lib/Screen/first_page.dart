@@ -1,3 +1,4 @@
+import 'package:allcareapp/bloc/all_service/all_service_bloc.dart';
 import 'package:allcareapp/model/AllServiceListResponseModel.dart';
 import 'package:allcareapp/service/SampleService.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class _FirstPageState extends State<FirstPage> {
       alignment: Alignment.center,
       child: ElevatedButton(
         onPressed: () {
-          print("a");
+          BlocProvider.of<AllServiceBloc>(context).add(getAllService());
           Navigator.of(context).pushNamed('/secondPage');
         },
         child: Text("Get service"),
@@ -37,29 +38,40 @@ class _FirstPageState extends State<FirstPage> {
     );
   }
 
+  Widget _containerError() {
+    return Container(
+        alignment: Alignment.center,
+        child: Text(
+          "Error",
+          style: TextStyle(color: Colors.red, fontSize: 30),
+        ));
+  }
+
   Widget _containerLoaded(List<AllService> allServiceList) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: allServiceList.length,
-      itemBuilder: (context, index) {
-        return Container(
-            child: Text("ID : " +
-                allServiceList[index].serviceID +
-                " Name : " +
-                allServiceList[index].serviceName));
-      },
+    return Container(
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: allServiceList.length,
+        itemBuilder: (context, index) {
+          return Container(
+              child: Text("ID : " +
+                  allServiceList[index].serviceID +
+                  " Name : " +
+                  allServiceList[index].serviceName));
+        },
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-          resizeToAvoidBottomInset: false,
+        child: Scaffold(
+        resizeToAvoidBottomInset: false,
           appBar: AppBar(
             title: Text("First Page"),
-          ),
-          body: _containerRequest()),
-    );
+        ),
+           body: _containerRequest(),
+    ));
   }
 }

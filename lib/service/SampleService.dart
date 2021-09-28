@@ -9,7 +9,7 @@ import 'package:allcareapp/model/TransDetailModel.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SampleService {
-  Future<List<AllService>> getBookingService(transDetailMessage transBody) async {
+  Future<AllServiceResponse> getBookingService() async {
 
     try {
       final http.Response response = await http.get(
@@ -23,8 +23,8 @@ class SampleService {
       String res = utf8.decode(response.bodyBytes);
       if (response.statusCode == 200) {
         Map map = json.decode(res);
-        AllServiceListResponseModel msg = AllServiceListResponseModel.fromJson(map);
-        return msg.result;
+        AllServiceResponse msg = AllServiceResponse.fromJson(map);
+        return msg;
       }
     } on SocketException catch (_) {
       throw Exception("networkErrorStatusCode");

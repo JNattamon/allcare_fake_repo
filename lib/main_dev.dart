@@ -1,6 +1,7 @@
 import 'package:allcareapp/Screen/edit_profile_page.dart';
 import 'package:allcareapp/Screen/first_page.dart';
 import 'package:allcareapp/Screen/second_page.dart';
+import 'package:allcareapp/bloc/all_service/all_service_bloc.dart';
 import 'package:allcareapp/service/SampleService.dart';
 import 'package:flavor_config/flavor_config.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,13 @@ Future<void> main() async {
   SampleService sampleService = new SampleService();
 
   runApp(
-      AllCareApp());
+    MultiBlocProvider(providers: [
+      BlocProvider<AllServiceBloc>(
+        create: (context) => AllServiceBloc(),
+      )
+    ], child: AllCareApp())
+
+  );
       // MultiBlocProvider(providers: [
       //   BlocProvider<...>(
       //     create: (context) => bloc,

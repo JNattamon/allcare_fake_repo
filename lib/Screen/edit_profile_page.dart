@@ -105,8 +105,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   _postBookDetail() async{
     SampleService sampleService = new SampleService();
     transDetailMessage mockUpBody = transDetailMessage(statusMessage: "000", statusCode: "000", result: TransDetailResult());
-    List<AllService> allService = await sampleService.getBookingService(mockUpBody);
-    print(allService[0].serviceID + "(" +  allService[0].serviceName + ")");
   }
 
   @override
