@@ -1,5 +1,8 @@
 import 'dart:io';
+import 'package:allcareapp/model/AllServiceListResponseModel.dart';
 import 'package:allcareapp/model/SampleCheckBoxModel.dart';
+import 'package:allcareapp/model/TransDetailModel.dart';
+import 'package:allcareapp/service/SampleService.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -99,6 +102,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
+  _postBookDetail() async{
+    SampleService sampleService = new SampleService();
+    transDetailMessage mockUpBody = transDetailMessage(statusMessage: "000", statusCode: "000", result: TransDetailResult());
+    List<AllService> allService = await sampleService.getBookingService(mockUpBody);
+    print(allService[0].serviceID + "(" +  allService[0].serviceName + ")");
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -130,7 +140,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: getImage,
+                      onTap: _postBookDetail,
                       child: Container(
                         alignment: Alignment.bottomRight,
                         child: IconButton(

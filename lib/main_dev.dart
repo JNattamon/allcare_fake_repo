@@ -1,8 +1,11 @@
 import 'package:allcareapp/Screen/edit_profile_page.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:allcareapp/Screen/first_page.dart';
+import 'package:allcareapp/Screen/second_page.dart';
+import 'package:allcareapp/service/SampleService.dart';
 import 'package:flavor_config/flavor_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:package_info/package_info.dart';
 
 Future<void> main() async {
@@ -14,19 +17,22 @@ Future<void> main() async {
   FlavorConfig(
     flavorName: 'dev',
     values: {
-      'commonFlavorBaseUrl': '',
-      'commonFlavorCognitoUrl': '',
-      'commonFlavorScope': '',
-      'commonFlavorUsername': '',
-      'commonFlavorPassword': '',
-      'commonFlavorApiKey': '',
-      'commonFlavorRedirect': '',
+      'commonFlavorBaseUrl':
+          'https://yz2eevnsle.execute-api.ap-southeast-1.amazonaws.com/dev/',
+      'commonFlavorApiKey': 'xZ77221YLzab0GIVwI14tpuj3BLAZc9d7loyjk10',
       'commonAppVersion': '${version}d',
-      'commonDeliImage': ''
     },
   );
 
-  runApp(AllCareApp());
+  SampleService sampleService = new SampleService();
+
+  runApp(
+      AllCareApp());
+      // MultiBlocProvider(providers: [
+      //   BlocProvider<...>(
+      //     create: (context) => bloc,
+      //   )
+      // ], child: ));
 }
 
 class AllCareApp extends StatelessWidget {
@@ -34,11 +40,15 @@ class AllCareApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: <String, WidgetBuilder>{
+        '/firstPage': (BuildContext context) => new FirstPage(),
+        '/secondPage': (BuildContext context) => new SecondPage(),
+      },
       title: 'All care',
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: EditProfilePage(),
+      home: FirstPage(),
     );
   }
 }
